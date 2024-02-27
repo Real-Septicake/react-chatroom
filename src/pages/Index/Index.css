@@ -1,0 +1,55 @@
+hr {
+    color: #2b2c36;
+}
+body {
+    background-color: #2d2d36;
+    font-family: monospace;
+}
+
+.Message_body {
+    padding: 2px 0px 1px 5px;
+}
+.Mention_highlight {
+    background-color: #cfbd1d9d;
+}
+
+.Username {
+    font-size: x-large;
+    color: whitesmoke;
+}
+.Timestamp {
+    font-size: smaller;
+    color: #a5a5a5;
+    margin-left: 10px;
+}
+
+.Message_text {
+    font-size: large;
+    color: whitesmoke;
+    margin-top: 5px;
+    margin-left: 7px;
+    margin-bottom: 5px;
+}
+.Server_message {
+    color: #f1a239;
+    margin-top: 5px;
+    margin-left: 7px;
+    margin-bottom: 5px;
+}
+.Mention_text {
+    border-radius: 4px;
+    padding: 3px;
+    font-weight: bold;
+    background-color: #7d54a3d8;
+}
+
+.Green {
+    font-size: large;
+    color: #1bb41b;
+    font-weight: bold;
+}
+.Red {
+    font-size: large;
+    color: #d63f24;
+    font-weight: bold;
+}
