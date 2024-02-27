@@ -2,7 +2,7 @@ import React from "react"
 import "./Index.css"
 import { Message } from "../../Message";
 
-function Index(msg: Message) {
+function Index(msgs: Array<Message>) {
     function messageElement(message: Message) {
         var date: Date = new Date(message.timestamp - new Date().getTimezoneOffset() * 60 * 1000);
         var formatted: string = `${date.getMonth()}/${date.getDate()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`
@@ -13,7 +13,7 @@ function Index(msg: Message) {
     }
 
     return <div>
-        {messageElement(msg)}
+        {msgs.map(msg => (messageElement(msg)))}
     </div>
 }
 

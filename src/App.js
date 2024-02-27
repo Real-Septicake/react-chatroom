@@ -5,12 +5,14 @@ import Index from "./pages/Index/Index"
 
 import { Message, FLAGS } from './Message';
 
+const messages = [new Message(FLAGS.message, 'User', 'Message')];
+
 function App() {
   return (
     <Router>
       <div>
         <Routes>
-          <Route path="/*" element={Index(new Message(FLAGS.message, 'User', 'Message'))}></Route>
+          <Route path="/*" element={Index(messages)}/>
         </Routes>
       </div>
     </Router>
