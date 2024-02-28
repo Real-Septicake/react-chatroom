@@ -4,7 +4,7 @@ export class Message {
     readonly msg: string;
     readonly timestamp: number;
 
-    constructor(flag: Flag, user: string = '', msg: string = '', timestamp: number = Date.now()) {
+    constructor(flag: Flag, user: string = '', msg: string = '', timestamp: number = Date.now() + new Date().getTimezoneOffset() * 60 * 1000) {
         this.flag = flag;
         this.user = user;
         this.msg = msg;
