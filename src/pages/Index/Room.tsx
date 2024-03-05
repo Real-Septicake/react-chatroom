@@ -2,6 +2,8 @@ import React, { useState } from "react"
 import "./Index.css"
 import { FLAGS, Message } from "../../Message";
 
+type splitResult = { mentioned: boolean, result: (string | JSX.Element)[] }
+
 export function Room({ msgs, username }: { msgs: Array<Message>, username: string }) {
     const [inputText, setInputText] = useState('');
     const messageList = msgs;
@@ -18,7 +20,7 @@ export function Room({ msgs, username }: { msgs: Array<Message>, username: strin
         )
     }
 
-    function highlightMentions(msg: string): { mentioned: boolean, result:(string | JSX.Element)[]} {
+    function highlightMentions(msg: string): splitResult {
         let res = [];
         let pieces = msg.split(new RegExp(`(?<=\\s|^)@${username}(?=\\s|$)`));
         for(let i = 0; i < pieces.length; i++) {
@@ -50,7 +52,7 @@ export function Room({ msgs, username }: { msgs: Array<Message>, username: strin
 
     function condenseElement(message: Message, mention: boolean, idx: number) {
         if (mention) {
-            let messageResult = highlightMentions(message.msg);
+            let messageResult: splitResult = highlightMentions(message.msg);
             return (
             <div className={`Message_body ${messageResult.mentioned ? "Mention_highlight" : ""}`} key={idx}>
                 <p className="Message_text">{messageResult.result}</p>
@@ -93,7 +95,7 @@ export function Room({ msgs, username }: { msgs: Array<Message>, username: strin
                         res.push(condenseElement(message, mention, i));
                     }
                     else {
-                        if (i !== 0) res.push(<hr key={message.timestamp + i}></hr>)
+                        if (i !== 0) res.push(<hr key={messages.length + i}></hr>)
                         res.push(messageElement(message, mention, i));
                         headStamp = message.timestamp;
                     }
@@ -102,19 +104,15 @@ export function Room({ msgs, username }: { msgs: Array<Message>, username: strin
                     break;
                 }
                 case FLAGS.join: {
-                    if (i !== 0) res.push(<hr key={message.timestamp + i}></hr>)
+                    if (i !== 0) res.push(<hr key={messages.length + i}></hr>)
                     res.push(joinMessage(message, i));
                     prevUser = null;
-                    prevStamp = 0;
-                    headStamp = 0;
                     break;
                 }
                 case FLAGS.leave: {
-                    if (i !== 0) res.push(<hr key={message.timestamp + i}></hr>)
+                    if (i !== 0) res.push(<hr key={messages.length + i}></hr>)
                     res.push(leaveMessage(message, i));
                     prevUser = null;
-                    prevStamp = 0;
-                    headStamp = 0;
                     break;
                 }
             }
