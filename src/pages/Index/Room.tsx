@@ -83,7 +83,7 @@ export function Room({ msgs, username }: { msgs: Array<Message>, username: strin
         let res = [];
         var prevUser: string | null = null;
         var prevStamp = 0;
-        var headStamp = 0
+        var headStamp = 0;
         for(let i = 0; i < messages.length; i++) {
             let message = messages[i];
             switch(message.flag) {
@@ -104,11 +104,17 @@ export function Room({ msgs, username }: { msgs: Array<Message>, username: strin
                 case FLAGS.join: {
                     if (i !== 0) res.push(<hr key={message.timestamp + i}></hr>)
                     res.push(joinMessage(message, i));
+                    prevUser = null;
+                    prevStamp = 0;
+                    headStamp = 0;
                     break;
                 }
                 case FLAGS.leave: {
                     if (i !== 0) res.push(<hr key={message.timestamp + i}></hr>)
                     res.push(leaveMessage(message, i));
+                    prevUser = null;
+                    prevStamp = 0;
+                    headStamp = 0;
                     break;
                 }
             }
