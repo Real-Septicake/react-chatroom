@@ -1,35 +1,46 @@
-export class Message {
-    readonly flag: Flag;
-    readonly user: string;
-    readonly msg: string;
-    readonly timestamp: number;
-
-    constructor(flag: Flag, user: string = '', msg: string = '', timestamp: number = Date.now() + new Date().getTimezoneOffset() * 60_000) {
-        this.flag = flag;
-        this.user = user;
-        this.msg = msg;
-        this.timestamp = timestamp;
+export function message(flag: Flag, user: string = '', msg: string = ''): Message {
+    return {
+        flag: flag,
+        user: user,
+        msg: msg,
+        timestamp: Date.now() + new Date().getTimezoneOffset() * 60_000,
+        uuid: ''
     }
+}
+
+export type Message = {
+    flag: Flag,
+    user: string,
+    msg: string,
+    timestamp: number,
+    uuid: string
 }
 
 const SHOW = 1;
 const LOG = 1 << 1;
 const SPECIAL = 1 << 2;
 
-class Flag {
-    readonly show: boolean;
-    readonly log: boolean;
-    readonly special: boolean;
+function flag(id: number, flags: number = 0): Flag {
+    return {
+        id: id,
+        show: (flags & SHOW) !== 0,
+        log: (flags & LOG) !== 0,
+        special: (flags & SPECIAL) !== 0
+    };
+}
 
-    constructor(flags: number = 0) {
-        this.show = (flags & SHOW) !== 0;
-        this.log = (flags & LOG) !== 0;
-        this.special = (flags & SPECIAL) !== 0;
-    }
+type Flag = {
+    id: number,
+    show: boolean,
+    log: boolean,
+    special: boolean;
 }
 
 export const FLAGS = {
-    message: new Flag(SHOW | LOG),
-    join: new Flag(SHOW | LOG),
-    leave: new Flag(SHOW | LOG),
+    message: flag(0, SHOW | LOG),
+    join: flag(1, SHOW | LOG),
+    leave: flag(2, SHOW | LOG),
+    name_check: flag(3, SPECIAL),
+    name_failed: flag(4),
+    name_succeed: flag(5),
 }
