@@ -1,5 +1,7 @@
 hr {
-    color: #2b2c36;
+    background-color: #ffffff00;
+    border-style: none;
+    height: 5px;
 }
 body {
     background-color: #2d2d36;
@@ -12,7 +14,7 @@ body {
     top: 0; bottom: 50px; left: 0; right: 0;
     overflow-y: auto;
 }
-.Input {
+.Text_input {
     position: absolute;
     overflow: hidden;
     width: 75%;
@@ -24,10 +26,21 @@ body {
     border-radius: 15px;
     border-style: none;
     border-width: 4px;
-    border-color: #535366;
-    background-color: #16171f;
+    background-color: #212229;
     color: whitesmoke;
     font-size: medium;
+}
+.Button_input {
+    position: absolute;
+    bottom: 8px;
+    margin-left: calc(75% + 15px);
+    background-color: #212229;
+    color: whitesmoke;
+    border-style: none;
+    border-radius: 20px;
+    height: 45px;
+    width: 70px;
+    font-size: large;
 }
 
 input:focus{
@@ -35,7 +48,7 @@ input:focus{
 }
 
 .Message_body {
-    padding: 2px 0px 1px 5px;
+    padding: 2px 0px 1px 15px;
 }
 .Mention_highlight {
     background-color: #cfbd1d9d;
@@ -50,15 +63,21 @@ input:focus{
     color: #a5a5a5;
     margin-left: 10px;
 }
+.Mention_timestamp {
+    font-size: smaller;
+    color: #272727;
+    margin-left: 10px;
+}
 
 .Message_text {
     font-size: large;
     color: whitesmoke;
     margin-top: 5px;
     margin-left: 7px;
-    margin-bottom: 5px;
+    margin-bottom: 3px;
 }
 .Server_message {
+    font-size: large;
     color: #f1a239;
     margin-top: 5px;
     margin-left: 7px;
