@@ -16,7 +16,6 @@ body {
 }
 .Text_input {
     position: absolute;
-    overflow: hidden;
     width: 75%;
     margin-bottom: 7px;
     margin-left: 7px;
