@@ -43,4 +43,6 @@ export const FLAGS = {
     name_check: flag(3, SPECIAL),
     name_failed: flag(4),
     name_succeed: flag(5),
+    log_request: flag(6, SPECIAL),
+    log_finish: flag(7),
 }
