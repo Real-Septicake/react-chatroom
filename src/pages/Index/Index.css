@@ -47,7 +47,7 @@ input:focus{
 }
 
 .Message_body {
-    padding: 2px 0px 1px 15px;
+    padding: 2px 0px 2px 15px;
 }
 .Mention_highlight {
     background-color: #cfbd1d9d;

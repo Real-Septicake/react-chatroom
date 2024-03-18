@@ -1,0 +1,19 @@
+body {
+    background-color: #2d2d36;
+    font-family: monospace;
+}
+input:focus{
+    outline: none;
+}
+
+h2 {
+    color: #e92525;
+}
+
+div.Naming {
+    /* display: flex; */
+    padding-left: 43%;
+    justify-content: center;
+    margin-top: 10%;
+    align-items: center;
+}

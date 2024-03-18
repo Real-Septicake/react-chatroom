@@ -12,6 +12,8 @@ export function Room({ msgs, username, sendJson }: { msgs: Array<Message>, usern
         return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()} ${date.getHours() < 10 ? '0' : ''}${date.getHours()}:${date.getMinutes() < 10 ? '0' : ''}${date.getMinutes()}`
     }
 
+    const mentioned = RegExp(`(?<=\\s|^)@${username}(?=\\s|$)`)
+
     function condenseMessage(currentUser: string, currentStamp: number, previousUser: string | null, headStamp: number, previousStamp: number): boolean {
         return (
             currentUser === previousUser &&
@@ -22,7 +24,7 @@ export function Room({ msgs, username, sendJson }: { msgs: Array<Message>, usern
 
     function highlightMentions(msg: string): splitResult {
         let res = [];
-        let pieces = msg.split(new RegExp(`(?<=\\s|^)@${username}(?=\\s|$)`));
+        let pieces = msg.split(mentioned);
         for(let i = 0; i < pieces.length; i++) {
             res.push(pieces[i])
             if(i !== pieces.length - 1) 
@@ -36,8 +38,8 @@ export function Room({ msgs, username, sendJson }: { msgs: Array<Message>, usern
         if (mention) {
             let messageResult = highlightMentions(message['msg']);
             return (
-            <div className={`Message_body ${messageResult.mentioned ? "Mention_highlight" : ""}`} key={idx}>
-                <span className="Username">{message['user']}</span><span className={messageResult.mentioned ? "Mention_timestamp" : "Timestamp"}>{formatted}</span>
+            <div className={"Message_body Mention_highlight"} key={idx}>
+                <span className="Username">{message['user']}</span><span className="Mention_timestamp">{formatted}</span>
                 <p className="Message_text">{messageResult.result}</p>
             </div>
             )
@@ -54,7 +56,7 @@ export function Room({ msgs, username, sendJson }: { msgs: Array<Message>, usern
         if (mention) {
             let messageResult: splitResult = highlightMentions(message['msg']);
             return (
-            <div className={`Message_body ${messageResult.mentioned ? "Mention_highlight" : ""}`} key={idx}>
+            <div className={"Message_body Mention_highlight"} key={idx}>
                 <p className="Message_text">{messageResult.result}</p>
             </div>
             )
@@ -89,7 +91,7 @@ export function Room({ msgs, username, sendJson }: { msgs: Array<Message>, usern
             let message = messages[i];
             switch(message['flag']['id']) {
                 case FLAGS.message['id']: {
-                    var mention = message['msg'].includes(`@${username}`)
+                    var mention = message['msg'].match(mentioned) !== null
                     if(condenseMessage(message['uuid'], message['timestamp'], prevUser, headStamp, prevStamp)) {
                         res.push(condenseElement(message, mention, i));
                     }

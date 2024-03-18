@@ -6,7 +6,8 @@ import { FLAGS, Message, message as messageCreate } from "./Message";
 enum ConnectionState {
     naming,
     receiving_log,
-    ready
+    ready,
+    intermediate,
 }
 
 const server = http.createServer();
@@ -29,29 +30,35 @@ const broadcast = async (message: Message) => {
 }
 
 const handleMessage = (data: string, uuid: string) => {
-    const message: Message = JSON.parse(JSON.parse(data.toString()));
-    if(message.flag.special) {
+    var message = JSON.parse(data.toString());
+    if(typeof message === "string") {
+        message = JSON.parse(message)
+    }
+    if(message['flag']['special']) {
         let connection = connections[uuid];
-        switch(message.flag.id) {
+        switch(message['flag']['id']) {
             case FLAGS.log_request.id: {
+                users[uuid] = ConnectionState.receiving_log
                 for(let msg of log) {
                     connection.send(JSON.stringify(msg));
                 }
                 connection.send(JSON.stringify(messageCreate(FLAGS.log_finish)));
+                users[uuid] = ConnectionState.intermediate
                 break;
             }
             case FLAGS.name_check.id: {
-                let names = Object.keys(usernames).map((uuid: string) => {
-                    return usernames[uuid];
-                })
-                if(message.user in names)
+                let names = Object.values(usernames)
+                if(message['user'] in names) {
                     connection.send(JSON.stringify(messageCreate(FLAGS.name_failed)));
-                else
-                    usernames[uuid] = message.user;
-                    connection.send(JSON.stringify(messageCreate(FLAGS.name_succeed)));
+                } else {
+                    usernames[uuid] = message['user'];
+                    users[uuid] = ConnectionState.intermediate
+                    connection.send(JSON.stringify(messageCreate(FLAGS.name_succeed, message['user'])));
+                }
             }
         }
     } else {
+        if(message.flag.id === FLAGS.join.id) users[uuid] = ConnectionState.ready
         if(message.flag.log) log.push(message);
         broadcast(message);
     }
@@ -67,7 +74,7 @@ const userLeave = (uuid: string) => {
 wsServer.on('connection', (connection: WebSocket) => {
     const uuid: string = uuidv4();
     connections[uuid] = connection;
-    users[uuid] = ConnectionState.ready;
+    users[uuid] = ConnectionState.naming;
     usernames[uuid] = '[[Unnamed User]]';
 
     console.log(`New Connection: ${uuid}`)

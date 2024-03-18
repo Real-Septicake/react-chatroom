@@ -1,0 +1,38 @@
+import { SendJsonMessage } from "react-use-websocket/dist/lib/types";
+import { Message, message as messageCreate, FLAGS } from "../../Message";
+
+import './Naming.css'
+import { useState } from "react";
+
+const valid_name = /\w/
+
+export function Naming({ namingError, setNamingError, sendJson }: { namingError: string, setNamingError: React.Dispatch<React.SetStateAction<string>>, sendJson: SendJsonMessage}) {
+    const [name, setName] = useState('')
+    
+    function validateName() {
+        console.log(name)
+        if(name.match(valid_name)) {
+            sendJson(messageCreate(FLAGS.name_check, name))
+        } else {
+            setNamingError('Invalid Username.')
+        }
+    }
+    
+    return (
+        <div className="Naming">
+            <h2>{namingError}</h2>
+            <form onSubmit={(e) => {
+                e.preventDefault()
+                validateName();
+            }}>
+                <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Enter a Name"
+                />
+                <input type="submit" value="Submit" />
+            </form>
+        </div>
+    )
+}
