@@ -3,7 +3,7 @@ import './App.css';
 import Room from "./pages/Index/Room"
 
 import { message as messageCreate, FLAGS } from './Message';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Naming } from './pages/Index/Naming';
 
 const messages = [];
