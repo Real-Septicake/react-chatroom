@@ -48,7 +48,7 @@ const handleMessage = (data: string, uuid: string) => {
             }
             case FLAGS.name_check.id: {
                 let names = Object.values(usernames)
-                if(message['user'] in names) {
+                if(names.includes(message['user'])) {
                     connection.send(JSON.stringify(messageCreate(FLAGS.name_failed)));
                 } else {
                     usernames[uuid] = message['user'];
