@@ -59,6 +59,7 @@ const handleMessage = (data: string, uuid: string) => {
         }
     } else {
         if(message.flag.id === FLAGS.join.id) users[uuid] = ConnectionState.ready
+        message['uuid'] = uuid;
         if(message.flag.log) log.push(message);
         broadcast(message);
     }

@@ -41,7 +41,6 @@ function App() {
     <div>
     {named ? <Room msgs={messages} username={username} sendJson={sendJsonMessage} />
     : <Naming namingError={lastNamingError} setNamingError={setNamingError} sendJson={sendJsonMessage} />}
-    {/* : <Room msgs={messages} username={username} sendJson={sendJsonMessage} /> } */}
     </div>
   )
 }
