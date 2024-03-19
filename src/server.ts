@@ -68,8 +68,10 @@ const handleMessage = (data: string, uuid: string) => {
 const userLeave = (uuid: string) => {
     delete connections[uuid];
     delete users[uuid];
-    broadcast(messageCreate(FLAGS.leave, usernames[uuid]));
+    const leave: Message = messageCreate(FLAGS.leave, usernames[uuid]);
+    broadcast(leave);
     delete usernames[uuid];
+    log.push(leave);
 }
 
 wsServer.on('connection', (connection: WebSocket) => {
