@@ -28,10 +28,11 @@ export function Naming({ namingError, setNamingError, sendJson }: { namingError:
                 <input
                 type="text"
                 value={name}
+                className="Name_input"
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Enter a Name"
                 />
-                <input type="submit" value="Submit" />
+                <input type="submit" value="Submit" className="Button_submit"/>
             </form>
         </div>
     )

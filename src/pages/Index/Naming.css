@@ -11,8 +11,30 @@ h2 {
 }
 
 div.Naming {
-    padding-left: 43%;
+    display: flex;
+    /* padding-left: 43%; */
     justify-content: center;
     margin-top: 10%;
     align-items: center;
+}
+
+input.Name_input {
+    border-style: none;
+    border-radius: 10px;
+    width: 400px;
+    height: 40px;
+    text-indent: 10px;
+    font-size: large;
+    background-color: #212229;
+    color: whitesmoke;
+}
+input.Button_submit {
+    border-style: none;
+    border-radius: 15px;
+    height: 40px;
+    width: 80px;
+    margin-left: 10px;
+    font-size: large;
+    background-color: #212229;
+    color: #8D9195;
 }
