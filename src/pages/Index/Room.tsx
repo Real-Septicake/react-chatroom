@@ -8,7 +8,7 @@ type splitResult = { mentioned: boolean, result: (string | JSX.Element)[] }
 export function Room({ msgs, username, sendJson }: { msgs: Array<Message>, username: string, sendJson: SendJsonMessage }) {
     const [inputText, setInputText] = useState('');
     function timestampToDateString(stamp: number): string {
-        var date: Date = new Date(stamp - new Date().getTimezoneOffset() * 60 * 1000);
+        var date: Date = new Date(stamp - new Date().getTimezoneOffset() * 60_000);
         return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()} ${date.getHours() < 10 ? '0' : ''}${date.getHours()}:${date.getMinutes() < 10 ? '0' : ''}${date.getMinutes()}`
     }
 
