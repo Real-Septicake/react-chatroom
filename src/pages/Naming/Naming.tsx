@@ -1,5 +1,5 @@
 import { SendJsonMessage } from "react-use-websocket/dist/lib/types";
-import { Message, message as messageCreate, FLAGS } from "../../Message";
+import { message as messageCreate, FLAGS } from "../../Message";
 
 import './Naming.css'
 import { useState } from "react";

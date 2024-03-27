@@ -2,9 +2,9 @@ import useWebSocket from 'react-use-websocket'
 import './App.css';
 import Room from "./pages/Index/Room"
 
-import { message as messageCreate, FLAGS } from './Message';
+import { message as messageCreate, FLAGS, isSet, CONSTS } from './Message';
 import { useState } from 'react';
-import { Naming } from './pages/Index/Naming';
+import { Naming } from './pages/Naming/Naming';
 
 const messages = [];
 
@@ -20,7 +20,7 @@ function App() {
     onMessage: (event) => {
       const message = JSON.parse(event.data)
       console.log(message)
-      if(message['flag']['show']) {
+      if(isSet(message['flag'], CONSTS['SHOW'])) {
         messages.push(message)
       } else {
         switch(message['flag']['id']) {
@@ -30,7 +30,6 @@ function App() {
             setName(message['user'])
             setNamed(true)
             sendJsonMessage(JSON.stringify(messageCreate(FLAGS.log_request)))
-            console.log('success')
           }
         }
       }

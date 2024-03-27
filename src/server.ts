@@ -1,7 +1,7 @@
 import { WebSocketServer, WebSocket } from "ws";
 import http from "http";
 import { v4 as uuidv4} from "uuid"
-import { FLAGS, Message, message as messageCreate } from "./Message";
+import { CONSTS, FLAGS, Message, isSet, message as messageCreate } from "./Message";
 
 enum ConnectionState {
     naming,
@@ -34,7 +34,7 @@ const handleMessage = (data: string, uuid: string) => {
     if(typeof message === "string") {
         message = JSON.parse(message)
     }
-    if(message['flag']['special']) {
+    if(isSet(message['flag'], CONSTS['SPECIAL'])) {
         let connection = connections[uuid];
         switch(message['flag']['id']) {
             case FLAGS.log_request.id: {
@@ -60,7 +60,7 @@ const handleMessage = (data: string, uuid: string) => {
     } else {
         if(message.flag.id === FLAGS.join.id) users[uuid] = ConnectionState.ready
         message['uuid'] = uuid;
-        if(message.flag.log) log.push(message);
+        if(isSet(message.flag, CONSTS['LOG'])) log.push(message);
         broadcast(message);
     }
 }

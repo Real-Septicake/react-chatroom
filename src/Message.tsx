@@ -1,4 +1,4 @@
-export function message(flag: Flag, user: string = '', msg: string = ''): Message {
+export function message(flag: MessageType, user: string = '', msg: string = ''): Message {
     return {
         flag: flag,
         user: user,
@@ -9,40 +9,42 @@ export function message(flag: Flag, user: string = '', msg: string = ''): Messag
 }
 
 export type Message = {
-    flag: Flag,
+    flag: MessageType,
     user: string,
     msg: string,
     timestamp: number,
     uuid: string
 }
 
-const SHOW = 1;
-const LOG = 1 << 1;
-const SPECIAL = 1 << 2;
+export const CONSTS = { 
+    SHOW: 1,
+    LOG: 1 << 1,
+    SPECIAL: 1 << 2,
+}
 
-function flag(id: number, flags: number = 0): Flag {
+export function isSet(type: MessageType, flag: number) {
+    return (type['flags'] & flag) !== 0;
+}
+
+function flag(id: number, flags: number = 0): MessageType {
     return {
         id: id,
-        show: (flags & SHOW) !== 0,
-        log: (flags & LOG) !== 0,
-        special: (flags & SPECIAL) !== 0
+        flags: flags,
     };
 }
 
-type Flag = {
+type MessageType = {
     id: number,
-    show: boolean,
-    log: boolean,
-    special: boolean;
+    flags: number;
 }
 
 export const FLAGS = {
-    message: flag(0, SHOW | LOG),
-    join: flag(1, SHOW | LOG),
-    leave: flag(2, SHOW | LOG),
-    name_check: flag(3, SPECIAL),
+    message: flag(0, CONSTS.SHOW | CONSTS.LOG),
+    join: flag(1, CONSTS.SHOW | CONSTS.LOG),
+    leave: flag(2, CONSTS.SHOW | CONSTS.LOG),
+    name_check: flag(3, CONSTS.SPECIAL),
     name_failed: flag(4),
     name_succeed: flag(5),
-    log_request: flag(6, SPECIAL),
+    log_request: flag(6, CONSTS.SPECIAL),
     log_finish: flag(7),
 }
