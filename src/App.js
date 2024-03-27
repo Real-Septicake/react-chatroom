@@ -27,10 +27,12 @@ function App() {
           case FLAGS.log_finish.id: sendJsonMessage(JSON.stringify(messageCreate(FLAGS.join, username))); break;
           case FLAGS.name_failed.id: setNamingError('Name Already In Use'); break;
           case FLAGS.name_succeed.id: {
-            setName(message['user'])
-            setNamed(true)
-            sendJsonMessage(JSON.stringify(messageCreate(FLAGS.log_request)))
+            setName(message['user']);
+            setNamed(true);
+            sendJsonMessage(JSON.stringify(messageCreate(FLAGS.log_request)));
+            break;
           }
+          default: console.error(`Unexpected flag id: ${message['flag']['id']}`);
         }
       }
     }
