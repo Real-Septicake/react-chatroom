@@ -4,7 +4,7 @@ import { message as messageCreate, FLAGS } from "../../Message";
 import './Naming.css'
 import { useState } from "react";
 
-const valid_name = /\w/
+const valid_name = /^[\w-]+$/
 
 export function Naming({ namingError, setNamingError, sendJson }: { namingError: string, setNamingError: React.Dispatch<React.SetStateAction<string>>, sendJson: SendJsonMessage }) {
     const [name, setName] = useState('')
