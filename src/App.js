@@ -19,7 +19,6 @@ function App() {
   const { sendJsonMessage } = useWebSocket(ws_url, {
     onMessage: (event) => {
       const message = JSON.parse(event.data)
-      console.log(message)
       if(isSet(message['flag'], CONSTS['SHOW'])) {
         messages.push(message)
       } else {
