@@ -10,12 +10,16 @@ h2 {
     color: #e92525;
 }
 
-div.Naming {
+h2.Error {
     display: flex;
-    /* padding-left: 43%; */
     justify-content: center;
+}
+form.Submit {
+    display: flex;
+    justify-content: center;
+}
+div.Naming {
     margin-top: 10%;
-    align-items: center;
 }
 
 input.Name_input {

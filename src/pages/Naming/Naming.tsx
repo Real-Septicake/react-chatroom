@@ -6,11 +6,10 @@ import { useState } from "react";
 
 const valid_name = /\w/
 
-export function Naming({ namingError, setNamingError, sendJson }: { namingError: string, setNamingError: React.Dispatch<React.SetStateAction<string>>, sendJson: SendJsonMessage}) {
+export function Naming({ namingError, setNamingError, sendJson }: { namingError: string, setNamingError: React.Dispatch<React.SetStateAction<string>>, sendJson: SendJsonMessage }) {
     const [name, setName] = useState('')
     
     function validateName() {
-        console.log(name)
         if(name.match(valid_name)) {
             sendJson(messageCreate(FLAGS.name_check, name))
         } else {
@@ -20,11 +19,11 @@ export function Naming({ namingError, setNamingError, sendJson }: { namingError:
     
     return (
         <div className="Naming">
-            <h2>{namingError}</h2>
+            <h2 className="Error">{namingError}</h2>
             <form onSubmit={(e) => {
                 e.preventDefault()
                 validateName();
-            }}>
+            }} className="Submit">
                 <input
                 type="text"
                 value={name}
