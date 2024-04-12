@@ -2,6 +2,9 @@ import React, { useState } from "react"
 import "./Index.css"
 import { FLAGS, Message, message } from "../../Message";
 import { SendJsonMessage } from "react-use-websocket/dist/lib/types";
+import { fullParse } from "../../mdParser/lang";
+
+import toHTML from "../../mdParser/util"
 
 type splitResult = { mentioned: boolean, result: (string | JSX.Element)[] }
 
@@ -27,7 +30,7 @@ export function Room({ msgs, username, sendJson }: { msgs: Array<Message>, usern
         let pieces = msg.split(mentioned);
         for(let i = 0; i < pieces.length; i++) {
             res.push(pieces[i])
-            if(i !== pieces.length - 1) 
+            if(i !== pieces.length - 1)
                 res.push(<span className="Mention_text" key={pieces.length + i}>{`@${username}`}</span>)
         }
         return { mentioned: pieces.length !== 1, result: res};
@@ -47,7 +50,7 @@ export function Room({ msgs, username, sendJson }: { msgs: Array<Message>, usern
         return (
         <div className="Message_body" key={idx}>
             <span className="Username">{message['user']}</span><span className="Timestamp">{formatted}</span>
-            <p className="Message_text">{message['msg']}</p>
+            <p className="Message_text">{toHTML(fullParse(message['msg']))}</p>
         </div>
         )
     }
@@ -63,7 +66,7 @@ export function Room({ msgs, username, sendJson }: { msgs: Array<Message>, usern
         }
         return (
         <div className="Message_body" key={idx}>
-            <p className="Message_text">{message['msg']}</p>
+            <p className="Message_text">{toHTML(fullParse(message['msg']))}</p>
         </div>
         )
     }
@@ -91,7 +94,7 @@ export function Room({ msgs, username, sendJson }: { msgs: Array<Message>, usern
             let message = messages[i];
             switch(message['flag']['id']) {
                 case FLAGS.message['id']: {
-                    var mention = message['msg'].match(mentioned) !== null
+                    var mention = false //message['msg'].match(mentioned) !== null
                     if(condenseMessage(message['uuid'], message['timestamp'], prevUser, headStamp, prevStamp)) {
                         res.push(condenseElement(message, mention, i));
                     }
