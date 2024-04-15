@@ -1,6 +1,5 @@
 body {
     background-color: #2d2d36;
-    font-family: monospace;
 }
 input:focus{
     outline: none;

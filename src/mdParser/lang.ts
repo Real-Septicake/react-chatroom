@@ -75,6 +75,7 @@ const language = P.createLanguage({
             r.strike,
             r.uline,
             r.small,
+            r.codeInline,
             r.text
         ]).many(0);
     },
@@ -86,6 +87,7 @@ const language = P.createLanguage({
             r.strike,
             r.uline,
             r.small,
+            r.codeInline,
             r.text
         ]);
     },
@@ -161,6 +163,15 @@ const language = P.createLanguage({
             if (typeof result === 'string') return result;
             return N.smallNode(mergeText(result[1] as (N.MdInline | string)[]))
         })
+    },
+
+    codeInline: r => {
+        const mark = P.strMatch("`")
+        return seqOrText([
+            mark,
+            P.sequence([P.not(mark), r.text], 1).many(1),
+            mark
+        ]).map(result => N.codeInlineNode(result[1].join('')))
     },
 
     text: r => { return P.allChar },

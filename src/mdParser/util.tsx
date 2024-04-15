@@ -28,6 +28,10 @@ export default function (rootAST: N.MdNode[]) {
                 return <span style={{fontSize: "0.8em", opacity: 0.8}}>{genEl(token.children)}</span>
             }
 
+            case "codeInline": {
+                return <span style={{fontFamily: "monospace", padding: "3px", borderRadius: "3px", backgroundColor: "#414147"}}>{token.props.text}</span>
+            }
+
             default: {
                 console.error(`Unexpected node type: ${(token as any).type}`)
                 return [];

@@ -1,6 +1,6 @@
 export type MdNode = MdInline
 
-export type MdInline = MdItalic | MdBold | MdText | MdStrike | MdUnderline | MdSmall
+export type MdInline = MdItalic | MdBold | MdText | MdStrike | MdUnderline | MdSmall | MdCodeInline
 
 export type MdItalic = {
     type: 'italic',
@@ -39,6 +39,16 @@ export type MdSmall = {
 }
 
 export const smallNode = (children: MdInline[]): MdSmall => { return { type: 'small', children: children } }
+
+export type MdCodeInline = {
+    type: 'codeInline',
+    props: {
+        text: string
+    }
+    children?: []
+}
+
+export const codeInlineNode = (text: string): MdCodeInline => { return { type: "codeInline", props: { text: text } } }
 
 export type MdText = {
     type: 'text'
